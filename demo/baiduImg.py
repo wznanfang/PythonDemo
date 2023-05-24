@@ -13,7 +13,7 @@ def get_images_from_baidu(keyword, page_num, save_dir):
     n = 0
     for pn in range(0, 10 * page_num, 10):
         # 添加随机休眠时间
-        time.sleep(random.randint(0, 5))
+        # time.sleep(random.randint(0, 2))
         # 请求参数
         param = {'tn': 'resultjson_com',
                  'ipn': 'rj',
@@ -74,7 +74,7 @@ def get_images_from_baidu(keyword, page_num, save_dir):
 
 
 if __name__ == '__main__':
-    keyword = '风景'
+    keyword = '古风'
     save_dir = 'E:/img'
     page_num = 1
     get_images_from_baidu(keyword, page_num, save_dir)
