@@ -7,6 +7,7 @@ import time
 
 
 def get_images_from_baidu(keyword, page_num, save_dir):
+    global image_data
     header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.48'}
     # 请求的 url
     url = 'https://image.baidu.com/search/acjson?'
@@ -64,7 +65,11 @@ def get_images_from_baidu(keyword, page_num, save_dir):
                     print(objUrl)
                     if not os.path.exists(save_dir):
                         os.makedirs(save_dir)
-                    image_data = requests.get(url=objUrl, headers=header).content
+                    try:
+                        image_data = requests.get(url=objUrl, headers=header).content
+                    except IOError:
+                        print("链接错误", image_data)
+                        continue
                     file_name = ''.join(random.choices(string.ascii_letters + string.digits, k=8)) + '.jpg'
                     with open(os.path.join(save_dir, file_name), 'wb') as fp:
                         fp.write(image_data)
@@ -74,7 +79,7 @@ def get_images_from_baidu(keyword, page_num, save_dir):
 
 
 if __name__ == '__main__':
-    keyword = '古风'
+    keyword = '汉服'
     save_dir = 'E:/img'
     page_num = 1
     get_images_from_baidu(keyword, page_num, save_dir)
