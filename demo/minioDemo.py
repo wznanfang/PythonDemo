@@ -16,7 +16,7 @@ class Bucket(object):
 
     # 连接ES
     def __init__(self):
-        self.client = Minio(endpoint="192.168.7.129:9001", access_key="minioadmin", secret_key="minioadmin", secure=False)
+        self.client = Minio(endpoint="10.168.1.47:31657", access_key="minioadmin", secret_key="minioadmin", secure=False)
 
     # 判断桶是否存在
     def exists_bucket(self, bucket_name):
@@ -136,10 +136,14 @@ class Bucket(object):
 
 if __name__ == '__main__':
     minioObj = Bucket()
-    bucketName = 'wznf'
+    bucketName = '5000'
     minioObj.create_bucket(bucketName)
-    filePrefix = '1/'
-    filePath = 'C:/Users/Administrator/Pictures/uToolsWallpapers'
-    for root, files in os.walk(filePath):
-        for file in files:
-            minioObj.fput_file(bucketName, filePrefix + file, os.path.join(root, file))
+    filePrefix = '/'
+    filePath = 'E:/shuju/1000-1'
+    files = os.listdir(filePath)
+    index = 1
+    for file in files:
+        index = index + 1
+        print(index)
+        print(os.path.basename(file))
+        minioObj.fput_file(bucketName, filePrefix + file, filePath + "/" + os.path.basename(file))
