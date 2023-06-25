@@ -10,15 +10,11 @@ files = os.listdir(filepath)
 # png_list = []
 # jpeg_list = []
 # other_list = []
-#
 # for file in files:
-#     # print(os.path.basename(file))
 #     if os.path.basename(file).endswith('.jpg'):
 #         jpg_list.append(os.path.basename(file))
-#         # 如果文件名的后缀是png，则将其添加到png_list中
 #     elif os.path.basename(file).endswith('.png'):
 #         png_list.append(os.path.basename(file))
-#         # 如果文件名的后缀是gif，则将其添加到gif_list中
 #     elif os.path.basename(file).endswith('.jpeg'):
 #         jpeg_list.append(os.path.basename(file))
 #     else:
@@ -29,7 +25,6 @@ files = os.listdir(filepath)
 # print(other_list)
 
 # 将一个文件夹的5000张图片分别存储到5个文件夹中，每个文件夹1000张图片
-# 目标文件夹路径
 src_dir = 'E:/shuju/5000'
 dest_dirs = ["E:/shuju/1000-1", "E:/shuju/1000-2", "E:/shuju/1000-3", "E:/shuju/1000-4", "E:/shuju/1000-5"]
 
