@@ -79,7 +79,7 @@ def get_images_from_baidu(keyword, page_num, save_dir):
 
 
 if __name__ == '__main__':
-    keyword = '汉服'
+    keyword = '水墨山水'
     save_dir = 'E:/img'
     page_num = 1
     get_images_from_baidu(keyword, page_num, save_dir)

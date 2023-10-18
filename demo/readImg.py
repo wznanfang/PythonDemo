@@ -26,7 +26,7 @@ files = os.listdir(filepath)
 
 # 将一个文件夹的5000张图片分别存储到5个文件夹中，每个文件夹1000张图片
 src_dir = 'E:/shuju/5000'
-dest_dirs = ["E:/shuju/1000-1", "E:/shuju/1000-2", "E:/shuju/1000-3", "E:/shuju/1000-4", "E:/shuju/1000-5"]
+dest_dirs = ["E:/test/1000-1", "E:/test/1000-2", "E:/test/1000-3", "E:/test/1000-4", "E:/test/1000-5", "E:/test/1000-6"]
 
 # Create the destination directories if they don't already exist
 for dest_dir in dest_dirs:
