@@ -1,10 +1,10 @@
 import json
 from datetime import datetime
 
-import itchat
 import requests
 
 username = '不逆'
+formatted_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 # 获取天气预报信息
@@ -58,14 +58,12 @@ def get_weather():
     # print("温馨提示：", notice)
 
     # 将解析好的数据组装成想要的格式做为函数的返回值
-    current_time = datetime.now()
-    formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
     result = "今日天气预报\n" \
              + formatted_time + " " + week + " " + city + "\n" \
-             + type + " " + fx + " " + fl + "\n" \
-             + low + " ~ " + high + "\n" \
+             + type + " " + fx + " " + fl + " " + low[-3:] + " ~ " + high[-3:] + "\n" \
              + "当前温度：" + str(wendu) + "℃\n" \
-             + "污染指数：" + str(pm25) + "/" + str(pm10) + "/" + str(aqi) + "\n" \
+             + "污染指数：" + "PM2.5(" + str(pm25) + ") - PM10(" + str(pm10) + ") " + "\n" \
+             + "空气指数：" + str(aqi) + "\n" \
              + "空气质量：" + str(quality) + "\n" \
              + "当前湿度：" + shidu + "\n" \
              + "温馨提示：" + notice
@@ -80,16 +78,16 @@ def auto_send():
         # 调用get_weather函数
         GW = get_weather()
         # 填入你朋友的微信昵称，注意这里不是备注，也不是微信帐号
-        friends = itchat.search_friends(username)
-        friend = friends[0]['UserName']
-        # # 发送微信消息
-        itchat.send(GW, friend)
+        # friends = itchat.search_friends(username)
+        # friend = friends[0]['UserName']
+        # # # 发送微信消息
+        # itchat.send(GW, friend)
     except Exception as e:
         print("消息发送异常：", e)
 
 
 if __name__ == '__main__':
-    # todo 登录微信 暂时登录有问题，无法登录
-    itchat.auto_login(hotReload=True)
+    # todo 登录微信 暂时登录有问题，扫码后执行程序报错
+    # itchat.auto_login(hotReload=True)
     # 调用函数进行消息发送
     auto_send()
