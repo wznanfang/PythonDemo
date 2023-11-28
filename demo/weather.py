@@ -12,7 +12,7 @@ def get_weather():
     # 这里使用了一个国家气象局的天气API，可以根据实际情况替换为自己的API接口
     url = 'http://t.weather.sojson.com/api/weather/city/101270101'
     response = requests.get(url)
-    # print(response.text)
+    print(response.text)
     weather = json.loads(response.text)
     # 解析服务器返回的数据，具体可参考weather.json文件
     cityInfo = weather['cityInfo']
@@ -87,7 +87,7 @@ def auto_send():
 
 
 if __name__ == '__main__':
-    # todo 登录微信 暂时登录有问题，扫码后执行程序报错
+    # todo 登录微信 扫码后执行程序报错，原因是相关账号被微信禁止登录微信网页版
     # itchat.auto_login(hotReload=True)
     # 调用函数进行消息发送
     auto_send()
