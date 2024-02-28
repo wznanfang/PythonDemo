@@ -4,15 +4,17 @@ import datetime
 import hashlib
 import hmac
 import json
-from urllib.parse import urlparse
 import ssl
 from datetime import datetime
 from time import mktime
 from urllib.parse import urlencode
+from urllib.parse import urlparse
 from wsgiref.handlers import format_date_time
 
 import websocket  # 使用websocket_client
+
 answer = ""
+
 
 class Ws_Param(object):
     # 初始化
@@ -36,8 +38,7 @@ class Ws_Param(object):
         signature_origin += "GET " + self.path + " HTTP/1.1"
 
         # 进行hmac-sha256进行加密
-        signature_sha = hmac.new(self.APISecret.encode('utf-8'), signature_origin.encode('utf-8'),
-                                 digestmod=hashlib.sha256).digest()
+        signature_sha = hmac.new(self.APISecret.encode('utf-8'), signature_origin.encode('utf-8'), digestmod=hashlib.sha256).digest()
 
         signature_sha_base64 = base64.b64encode(signature_sha).decode(encoding='utf-8')
 
@@ -63,7 +64,7 @@ def on_error(ws, error):
 
 
 # 收到websocket关闭的处理
-def on_close(ws,one,two):
+def on_close(ws, one, two):
     print(" ")
 
 
@@ -73,7 +74,7 @@ def on_open(ws):
 
 
 def run(ws, *args):
-    data = json.dumps(gen_params(appid=ws.appid, domain= ws.domain,question=ws.question))
+    data = json.dumps(gen_params(appid=ws.appid, domain=ws.domain, question=ws.question))
     ws.send(data)
 
 
@@ -89,7 +90,7 @@ def on_message(ws, message):
         choices = data["payload"]["choices"]
         status = choices["status"]
         content = choices["text"][0]["content"]
-        print(content,end ="")
+        print(content, end="")
         global answer
         answer += content
         # print(1)
@@ -97,7 +98,7 @@ def on_message(ws, message):
             ws.close()
 
 
-def gen_params(appid, domain,question):
+def gen_params(appid, domain, question):
     """
     通过appid和用户的提问来生成请参数
     """
@@ -122,7 +123,7 @@ def gen_params(appid, domain,question):
     return data
 
 
-def main(appid, api_key, api_secret, Spark_url,domain, question):
+def main(appid, api_key, api_secret, Spark_url, domain, question):
     # print("星火:")
     wsParam = Ws_Param(appid, api_key, api_secret, Spark_url)
     websocket.enableTrace(False)
@@ -132,5 +133,3 @@ def main(appid, api_key, api_secret, Spark_url,domain, question):
     ws.question = question
     ws.domain = domain
     ws.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
-
-
