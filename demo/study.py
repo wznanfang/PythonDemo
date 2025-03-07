@@ -4,18 +4,18 @@ from bs4 import BeautifulSoup
 import random
 
 # 第一个接口获取所有模拟考试记录
-list_url = "https://www.xc985.net/BeegoEduApi/api/pc/getsimexamhistorylist/28169469/1"
+list_url = "https://www.xc985.net/BeegoEduApi/api/pc/getsimexamlist/28169468/51-02139/1"
 base_url = "https://www.xc985.net/BeegoEduApi/api/pc/gensimexamreListBysrId/28169469/{simId}/0"
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-    "content-type":"application/json;charset=utf-8",
+    "content-type": "application/json;charset=utf-8",
     "Authorization": "Beego aHVhaGFuOmJlZWdvMjAxNQ==",
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0NzQxOTg3IiwidWdpZCI6MSwiZXhwIjoxNzQxNTkwMzMwLCJ1c2VySWQiOjQ3NDE5ODcsImlhdCI6MTc0MTMzMTEzMH0.TcX5c1NVLjGqnWwfpgt59DTJfhihRY9MDD2rsd4fkeSWXq_qCcVcRLycf5GKUibMGCuf85uuSqUP-BQjBtO0RA"
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0NzQxOTg3IiwidWdpZCI6MSwiZXhwIjoxNzQxNjE5OTg1LCJ1c2VySWQiOjQ3NDE5ODcsImlhdCI6MTc0MTM2MDc4NX0.Xg-AYoi0gxWO6KtNKj_FpNZvCGyJoCi6t7LQbbSfFENPJ16qrLlCmEXONauxkgYI_XXn6iLXh7de6Ctvqq669g"
 }
 
 
-#获得考试题相关id
+# 获得考试题相关id
 def get_sim_ids():
     """获取所有模拟考试ID"""
     sim_records = []
@@ -26,14 +26,16 @@ def get_sim_ids():
 
         if data.get("status") != 1:
             print(f"获取列表失败: {data.get('message')}")
-            return sim_records
-        records = data.get("data", {}).get("simexamrecordList", [])
+            return []
+        records = data.get("data", {}).get("SimExamStoreList", [])
+        #遍历得到模拟考试ID和考试名称并返回列表
         for record in records:
             if record.get("simId"):
-                sim_records.append((record.get("simId"), record.get("srName", "未知考试")))
+                sim_records.append((record.get("simId"), record.get("examName", "未知考试")))
+        return sim_records
     except Exception as e:
         print(f"获取考试列表失败: {str(e)}")
-        return sim_records
+        return []
 
 # 下载考试题
 def download_exam(sim_id, exam_name):
@@ -59,6 +61,9 @@ def download_exam(sim_id, exam_name):
 
         with open(file_path, "w", encoding="utf-8") as f:
             for index, question in enumerate(questions, 1):
+                keyType = question.get('keyType', '')
+                if keyType == '单选' or keyType == '判断改错题':
+                    continue
                 title = question.get('title', '无题目内容')
                 analyze = question.get('analyze', '暂无解析')
 
@@ -72,10 +77,12 @@ def download_exam(sim_id, exam_name):
         print(f"下载失败 {exam_name}: {str(e)}")
         return False
 
+
 if __name__ == "__main__":
 
     # 获取所有考试记录
     sim_records = get_sim_ids()
+    print(sim_records)
     if not sim_records:
         print("没有找到模拟考试记录")
         exit()
@@ -87,6 +94,6 @@ if __name__ == "__main__":
         success = download_exam(sim_id, exam_name)
         if not success:
             print(f"跳过 {exam_name}...")
-        time.sleep(random.randint(0, 3))  # 添加间隔防止被封
+        time.sleep(random.randint(0, 2))
 
     print("全部下载完成！")

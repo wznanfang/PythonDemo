@@ -1,9 +1,9 @@
 from demo.spark import SparkApi
 
 # 以下密钥信息从控制台获取
-appid = "ffa4749b"  # 填写控制台中获取的 APPID 信息
-api_secret = "YzI4YjU0YzIzMDhiNTFkM2MwYzI1NzNn"  # 填写控制台中获取的 APISecret 信息
-api_key = "b45fb240f420c5319b895c804cef32ae"  # 填写控制台中获取的 APIKey 信息
+appid = "ffa4749a"  # 填写控制台中获取的 APPID 信息
+api_secret = "YzI4YjU0YzIzMDhiNTFkM2MwYzI1NzNm"  # 填写控制台中获取的 APISecret 信息
+api_key = "b45fb240f420c5319b895c804cef32ad"  # 填写控制台中获取的 APIKey 信息
 
 # 用于配置大模型版本
 # domain = "general"  # v1.5版本
