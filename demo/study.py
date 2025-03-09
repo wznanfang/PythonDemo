@@ -11,7 +11,7 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
     "content-type": "application/json;charset=utf-8",
     "Authorization": "Beego aHVhaGFuOmJlZWdvMjAxNQ==",
-    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0NzQxOTg3IiwidWdpZCI6MSwiZXhwIjoxNzQxNjE5OTg1LCJ1c2VySWQiOjQ3NDE5ODcsImlhdCI6MTc0MTM2MDc4NX0.Xg-AYoi0gxWO6KtNKj_FpNZvCGyJoCi6t7LQbbSfFENPJ16qrLlCmEXONauxkgYI_XXn6iLXh7de6Ctvqq669g"
+    "token": "1"
 }
 
 
@@ -61,9 +61,9 @@ def download_exam(sim_id, exam_name):
 
         with open(file_path, "w", encoding="utf-8") as f:
             for index, question in enumerate(questions, 1):
-                keyType = question.get('keyType', '')
-                if keyType == '单选' or keyType == '判断改错题':
-                    continue
+                # keyType = question.get('keyType', '')
+                # if keyType == '单选' or keyType == '判断改错题':
+                #     continue
                 title = question.get('title', '无题目内容')
                 analyze = question.get('analyze', '暂无解析')
 
