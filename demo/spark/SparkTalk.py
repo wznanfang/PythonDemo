@@ -11,9 +11,9 @@ api_key = "b45fb240f420c5319b895c804cef32ad"  # 填写控制台中获取的 APIK
 # Spark_url = "ws://spark-api.xf-yun.com/v1.1/chat"  # v1.5环境的地址
 
 # 用于配置大模型版本
-domain = "generalv2"  # v2.0版本
+domain = "4.0Ultra"  # v2.0版本
 # 云端环境的服务地址
-Spark_url = "ws://spark-api.xf-yun.com/v2.1/chat"  # v2.0环境的地址
+Spark_url = "wss://spark-api.xf-yun.com/v4.0/chat"  # v2.0环境的地址
 
 text = []
 
